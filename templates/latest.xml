@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    	<title>Comics — Recent</title>
+      <link>https://lab.passiomatic.com/comics/</link>
+      <atom:link href="https://lab.passiomatic.com/comics/latest.xml" rel="self" type="application/rss+xml" />
+      <lastBuildDate>{{timestamp|http_datetime}}</lastBuildDate>
+      <ttl>1440</ttl>
+      <description>All the latest comics.</description>
+    {% for r in items %}
+      <item>
+        <title>{{r.title}}</title>
+        <description>
+            &lt;img loading=&quot;lazy&quot; alt=&quot;&quot; src=&quot;{{r.cover}}&quot;&gt;
+            A new comic book "{{r.title}}" has been found. 
+        </description>
+        <guid>{{r.link}}</guid>
+        <pubDate>{{timestamp|http_datetime}}</pubDate>     
+        <link>{{r.link}}</link>
+      </item>
+    {%endfor%}      
+  </channel>
+</rss>
