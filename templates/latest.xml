@@ -11,7 +11,9 @@
       <item>
         <title>{{r.title}}</title>
         <description>
-            &lt;img loading=&quot;lazy&quot; alt=&quot;&quot; src=&quot;{{r.cover}}&quot;&gt;
+            {%if r.cover %}
+              &lt;img loading=&quot;lazy&quot; alt=&quot;&quot; src=&quot;{{r.cover}}&quot;&gt;
+            {% endif %}
             &lt;p&gt;A new comic book "{{r.title}}" has been found.&lt;/p&gt;
         </description>
         <guid>{{r.link}}</guid>
