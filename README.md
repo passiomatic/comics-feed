@@ -2,6 +2,10 @@
 
 Comics Feed is a little Python 3 script that scrapes given web site URL's and produces a RSS feed, ready to be consumed by your feed reader of choice.
 
+![Screenshot](./screenshot.jpg)
+
+_The RSS feed as seen in Reeder app on iOS_
+
 ## Install 
 
 ```
