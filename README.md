@@ -14,11 +14,14 @@ pip3 install -r requirements.txt
 
 ## Run
 
+There are two ways to use it:
+
 ```
-python3 run.py
+python3 run.py http://example.com/ http://example2.com/
+python3 run.py -i sources.txt
 ```
 
-Comics Feed will look into `sources.txt` and fetch one URL per line.
+In the second line Comics Feed will look into `sources.txt` and fetch one URL per line.
 
 ## Add more scrapers
 
@@ -30,7 +33,7 @@ Each scraper function receives a [BeautifulSoup object][1] as argument, ready to
 {
     'title': "Lorem ipsum"                   # Comic title 
     'link': "http://example.com/..."         # URL for the download or detail page
-    'cover': "http://example.com/cover.jpg"  # URL for the cover image 
+    'cover': "http://example.com/cover.jpg"  # URL for the cover image, set '' if there's no cover available
 }
 ```
 
