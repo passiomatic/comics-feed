@@ -8,6 +8,7 @@ from urllib.parse import urlparse
 import importlib
 import os
 import locale
+from optparse import OptionParser, make_option
 
 # Grab this file installation directory
 INSTALLATION_DIR = os.path.dirname(__file__)
@@ -34,19 +35,40 @@ def http_fmt(value):
 
 template_env.filters['http_datetime'] = http_fmt
 
+USAGE = """%prog [options] [URL...]
+Scrape given URL's using user-written functions."""
+
 def main():
+
+    options = [
+        make_option('-i', '--input',
+            dest='input_file', help='Specify input file containing URL list'),
+    ]
+
+    parser = OptionParser(option_list=options, usage=USAGE)
+
+    urls = []
+    options, args = parser.parse_args()
+    if len(args) > 1:
+        urls = args
+    elif options.input_file:
+         with open(os.path.join(INSTALLATION_DIR, options.input_file)) as input_file: 
+            for source in input_file:            
+                source = source.strip()
+                if source == '': 
+                    continue # Skip empty lines
+                urls.append(source)
+    else:
+        parser.error("no URL's or input file given")
+
     now = datetime.now()
     items = []
-    with open(os.path.join(INSTALLATION_DIR,'sources.txt')) as input_file: 
-        for source in input_file:            
-            source = source.strip()
-            if source == '': 
-                continue # Skip empty lines
-            print(f"Fetching {source}...", end='')
-            r = requests.get(source)
-            print(f" got {r.status_code}")
-            new_items = scrape_page(source, r.text)
-            items = items + new_items
+    for source in urls:            
+        print(f"Fetching {source}...", end='')
+        r = requests.get(source)
+        print(f" got {r.status_code}")
+        new_items = scrape_page(source, r.text)
+        items = items + new_items
     print(f"Scraped {len(items)} items.")
     build_feed(now, items, "latest.xml")
 
