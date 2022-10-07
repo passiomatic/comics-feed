@@ -63,6 +63,7 @@ def main():
 
     now = datetime.now()
     items = []
+    total_items = 0
     for source in urls:            
         print(f"Fetching {source}...", end='')
         r = requests.get(source)
@@ -78,7 +79,8 @@ def main():
 
         new_items = scrape_page(scraper, r.text)
         items = items + [(pieces.hostname, new_items)]
-    print(f"Scraped {len(items)} items.")
+        total_items = total_items + len(new_items)
+    print(f"Scraped {total_items} items.")
     build_feed(now, items, "latest.xml")
 
 
