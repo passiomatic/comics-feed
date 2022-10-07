@@ -7,19 +7,21 @@
       <lastBuildDate>{{timestamp|http_datetime}}</lastBuildDate>
       <ttl>1440</ttl>
       <description>All the latest comics.</description>
-    {% for r in items %}
-      <item>
-        <title>{{r.title}}</title>
-        <description>
-            {%if r.cover %}
-              &lt;a href=&quot;{{r.link}}&quot;&gt;&lt;img loading=&quot;lazy&quot; alt=&quot;&quot; src=&quot;{{r.cover}}&quot;&gt;&lt;/a&gt;
-            {% endif %}
-            &lt;p&gt;A new comic book "{{r.title}}" has been found.&lt;/p&gt;
-        </description>
-        <guid>{{r.link}}</guid>
-        <pubDate>{{timestamp|http_datetime}}</pubDate>     
-        <link>{{r.link}}</link>
-      </item>
+    {% for (hostname, source_items) in items %}
+      {% for r in source_items %}
+        <item>
+          <title>{{r.title}}</title>
+          <description>
+              {%if r.cover %}
+                &lt;a href=&quot;{{r.link}}&quot;&gt;&lt;img loading=&quot;lazy&quot; alt=&quot;&quot; src=&quot;{{r.cover}}&quot;&gt;&lt;/a&gt;
+              {% endif %}
+              &lt;p&gt;A new comic book "{{r.title}}" has been found on {{hostname}}.&lt;/p&gt;
+          </description>
+          <guid>{{r.link}}</guid>
+          <pubDate>{{timestamp|http_datetime}}</pubDate>     
+          <link>{{r.link}}</link>
+        </item>
+      {%endfor%}      
     {%endfor%}      
   </channel>
 </rss>

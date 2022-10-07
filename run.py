@@ -67,17 +67,24 @@ def main():
         print(f"Fetching {source}...", end='')
         r = requests.get(source)
         print(f" got {r.status_code}")
-        new_items = scrape_page(source, r.text)
-        items = items + new_items
+
+        pieces = urlparse(source)
+        module_name = pieces.hostname.replace(".", "_")
+        try:
+            scraper = importlib.import_module(f"scrapers.{module_name}")
+        except ImportError:
+            print(f"Cannot find scraper for URL {source}, skipped")            
+            continue
+
+        new_items = scrape_page(scraper, r.text)
+        items = items + [(pieces.hostname, new_items)]
     print(f"Scraped {len(items)} items.")
     build_feed(now, items, "latest.xml")
 
 
-def scrape_page(url, content):
+def scrape_page(scraper, content):
     soup = BeautifulSoup(content, 'html.parser')
-    scraper = get_scraper(url)
-    items = scraper.scrape(soup)
-    return items
+    return scraper.scrape(soup)
 
 
 def build_feed(now, items, output_filename):
@@ -86,14 +93,14 @@ def build_feed(now, items, output_filename):
                     timestamp=now).dump(os.path.join(configuration.OUTPUT_DIR, output_filename))
 
 
-def get_scraper(source):
-    pieces = urlparse(source)
-    module_name = pieces.hostname.replace(".", "_")
-    try:
-        scraper = importlib.import_module(f"scrapers.{module_name}")
-    except (ImportError):
-        raise ValueError(f"Cannot find scraper for URL {source}")
-    return scraper
+# def get_scraper(source):
+#     pieces = urlparse(source)
+#     module_name = pieces.hostname.replace(".", "_")
+#     try:
+#         scraper = importlib.import_module(f"scrapers.{module_name}")
+#     except (ImportError):
+#         raise ValueError(f"Cannot find scraper for URL {source}")
+#     return scraper
 
 
 if __name__ == "__main__":
