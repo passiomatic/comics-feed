@@ -17,8 +17,8 @@ pip3 install -r requirements.txt
 There are two ways to use it:
 
 ```
-python3 run.py http://example.com/ http://example2.com/
-python3 run.py -i sources.txt
+python3 scrape.py http://example.com/ http://example2.com/
+python3 scrape.py -i sources.txt
 ```
 
 In the second line Comics Feed will look into `sources.txt` and fetch one URL per line.

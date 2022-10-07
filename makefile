@@ -1,7 +1,7 @@
 all: run 
 
 run: 
-	python3 run.py -i sources.txt
+	python3 scrape.py -i sources.txt
 
 cli: 
 	python3 -i cli.py
