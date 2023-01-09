@@ -14,14 +14,23 @@ pip3 install -r requirements.txt
 
 ## Run
 
-There are two ways to use it:
+You can specify the input URL's one after another, e.g.:
 
 ```
-python3 scrape.py http://example.com/ http://example2.com/
-python3 scrape.py -i sources.txt
+$ python3 scrape.py http://example.com/ http://example2.com/
 ```
 
-In the second line Comics Feed will look into `sources.txt` and fetch one URL per line.
+Alternatively you use an input file, listing all the URL's one per line:
+
+```
+$ python3 scrape.py -i sources.txt
+```
+
+By default Comics Feed will create a `feed.xml` file in the current working directory. You can supply a `-o` flag to specify a different file name:
+
+```
+$ python3 scrape.py -i sources.txt -o /some/path/latest.xml
+```
 
 ## Add more scrapers
 
