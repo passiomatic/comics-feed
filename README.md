@@ -34,7 +34,7 @@ $ python3 scrape.py -i sources.txt -o /some/path/latest.xml
 
 ## Add more scrapers
 
-The `scrapers` folder contains a Python module for each web site to scrape, named after its domain name. As an example see the `scrapers/comicslady_com.py` module, which scrapes the ComicsLady.com web site.
+The `scrapers` folder contains a Python module for each web site to scrape, named after its domain name. As an example see the `scrapers/overday_org.py` module, which scrapes the Overday.org web site.
 
 Each scraper function receives a [BeautifulSoup object][1] as argument, ready to be navigated, and returns a list of found feed items, using these Python dictionary keys:
 
